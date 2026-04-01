@@ -115,13 +115,11 @@ npm run dev
 - SMTP is optional. If you leave it empty, mail features will not be active.
 - OpenAI image enhancement is optional. Set `OPENAI_API_KEY` only if you want that feature enabled.
 
-## Deployment Idea
+## Deployment
 
-One practical Azure setup for this project is:
+This repository is currently prepared for local development.
 
-- Frontend in Azure Static Web Apps
-- Backend in Azure App Service
-- Database in Azure SQL Database
+Cloud deployment can be added later depending on the target platform, budget, and production needs.
 
 ## License
 
