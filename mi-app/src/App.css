@@ -6135,6 +6135,12 @@ p {
   text-wrap: balance;
 }
 
+.store-shell > .site-header {
+  position: relative !important;
+  top: auto !important;
+  z-index: 1 !important;
+}
+
 .header-brand-block,
 .header-actions-block,
 .main-nav,
