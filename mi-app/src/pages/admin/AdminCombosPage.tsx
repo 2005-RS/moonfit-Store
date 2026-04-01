@@ -5,7 +5,7 @@ import { formatCurrency } from '../../lib/currency'
 import {
   createCombo,
   deleteCombo,
-  fetchAdminProducts,
+  fetchAllAdminProducts,
   fetchCombos,
   updateCombo,
 } from '../../lib/adminApi'
@@ -70,11 +70,11 @@ function AdminCombosPage() {
     try {
       const [comboData, productData] = await Promise.all([
         fetchCombos(),
-        fetchAdminProducts({ pageSize: 100 }),
+        fetchAllAdminProducts(),
       ])
 
       setCombos(comboData)
-      setProducts(productData.data)
+      setProducts(productData)
       setPageError('')
     } catch (requestError) {
       setPageError(

@@ -192,6 +192,8 @@ function buildQueryString(query: Record<string, string | number | undefined>) {
   return serializedQuery ? `?${serializedQuery}` : ''
 }
 
+const MAX_ADMIN_PRODUCT_PAGE_SIZE = 50
+
 function toFrontendPlacement(
   placement: BackendCampaign['placement'],
 ): AdminCampaignPlacement {
@@ -432,16 +434,43 @@ export async function fetchAdminProducts(query: AdminProductListQuery = {}) {
   } satisfies PaginatedResult<Product>
 }
 
-export async function fetchDiscountedCampaignProducts() {
-  const response = await fetchAdminProducts({
+export async function fetchAllAdminProducts(
+  query: Omit<AdminProductListQuery, 'page' | 'pageSize'> = {},
+) {
+  const firstPage = await fetchAdminProducts({
+    ...query,
     page: 1,
-    pageSize: 100,
+    pageSize: MAX_ADMIN_PRODUCT_PAGE_SIZE,
+  })
+
+  if (firstPage.meta.totalPages <= 1) {
+    return firstPage.data
+  }
+
+  const remainingPages = await Promise.all(
+    Array.from({ length: firstPage.meta.totalPages - 1 }, (_, index) =>
+      fetchAdminProducts({
+        ...query,
+        page: index + 2,
+        pageSize: MAX_ADMIN_PRODUCT_PAGE_SIZE,
+      }),
+    ),
+  )
+
+  return [
+    ...firstPage.data,
+    ...remainingPages.flatMap((page) => page.data),
+  ]
+}
+
+export async function fetchDiscountedCampaignProducts() {
+  const products = await fetchAllAdminProducts({
     status: 'Activa',
     sortBy: 'name',
     sortDirection: 'asc',
   })
 
-  return response.data.filter(
+  return products.filter(
     (product) =>
       product.previousPrice !== undefined && product.previousPrice > product.price,
   )
