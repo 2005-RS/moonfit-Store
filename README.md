@@ -1,126 +1,92 @@
 # Moonfit Store
 
-Moonfit Store is a full-stack ecommerce project with a storefront for customers and an admin panel for operations.
+Moonfit Store es un ecommerce full-stack con tienda para clientes y panel administrativo para operacion interna.
 
 ## Stack
 
 - Frontend: React 19 + Vite + React Router
 - Backend: NestJS 11
-- Database: SQL Server + Prisma
+- Base de datos: SQL Server + Prisma
 - Auth: JWT
-- Docs: Swagger at `/docs`
+- Documentacion tecnica de API: Swagger en `/docs`
 
-## Project Structure
+## Estructura del proyecto
 
-- `mi-app/`: storefront and admin frontend
-- `server/`: REST API, auth, inventory, orders, uploads, reports
+- `mi-app/`: frontend de tienda y admin
+- `server/`: API REST, auth, inventario, pedidos, uploads y reportes
+- `docs/`: documentacion completa del sistema
 
-## Main Flows
+## Documentacion completa
 
-- Public storefront with home, catalog, product detail, cart, and account pages
-- Admin area with dashboard, products, categories, brands, combos, campaigns, orders, inventory, and customers
-- Order management and operational reporting
-- Product image uploads and payment proof uploads
+La documentacion detallada del ecommerce esta en:
 
-## Requirements
+- [Presentacion profesional](./docs/presentacion-profesional.md)
+- [Guia de entrevista tecnica](./docs/guia-entrevista-tecnica.md)
+- [Indice general](./docs/README.md)
+- [Arquitectura](./docs/arquitectura.md)
+- [Frontend](./docs/frontend.md)
+- [Backend](./docs/backend.md)
+- [Base de datos](./docs/base-de-datos.md)
+- [API](./docs/api.md)
+- [Flujos operativos](./docs/flujos-operativos.md)
+- [Instalacion y operacion](./docs/instalacion-y-operacion.md)
 
-- Node.js 20+
-- npm 10+
-- SQL Server running locally or remotely
-
-## Local Setup
-
-1. Clone the repository.
-2. Create the backend env file from `server/.env.example`.
-3. Create the frontend env file from `mi-app/.env.example`.
-4. Install dependencies in both apps.
-
-```bash
-cd server
-npm install
-```
-
-```bash
-cd ../mi-app
-npm install
-```
-
-## Backend Setup
-
-Create `server/.env` based on the example file and set your SQL Server credentials, JWT secret, SMTP config, and optional OpenAI key.
-
-Then generate Prisma, sync the schema, and seed the database:
-
-```bash
-cd server
-npx prisma generate
-```
-
-```bash
-npx prisma db push
-```
-
-```bash
-npm run db:seed
-```
-
-The API runs by default on `http://localhost:3000`.
-
-Useful backend endpoints:
-
-- `GET /health`
-- `GET /docs`
-- `POST /auth/login`
-
-## Frontend Setup
-
-Create `mi-app/.env` based on `mi-app/.env.example`.
-
-Default local frontend env:
-
-```env
-VITE_API_URL=http://localhost:3000
-```
-
-The frontend runs by default on `http://localhost:5173`.
-
-Important routes:
-
-- Store: `/`
-- Catalog: `/catalogo`
-- Cart: `/carrito`
-- Admin login: `/admin/login`
-- Admin dashboard: `/admin`
-
-## Development Commands
+## Arranque rapido
 
 Backend:
 
-```bash
-cd server
+```bat
+cd /d C:\Users\ronny\OneDrive\Escritorio\eccomers\server
+copy .env.example .env
+npm install
+npx prisma generate
+npx prisma db push
+npm run db:seed
 npm run start:dev
 ```
 
 Frontend:
 
-```bash
-cd mi-app
+```bat
+cd /d C:\Users\ronny\OneDrive\Escritorio\eccomers\mi-app
+copy .env.example .env
+npm install
 npm run dev
 ```
 
-## Notes
+## URLs locales
 
-- The backend serves uploaded files from `/uploads`.
-- The seed script creates an admin user. Set `SEED_ADMIN_PASSWORD` before running the seed in shared or production environments.
-- SMTP is optional. If you leave it empty, mail features will not be active.
-- OpenAI image enhancement is optional. Set `OPENAI_API_KEY` only if you want that feature enabled.
+- tienda: `http://localhost:5173`
+- admin login: `http://localhost:5173/admin/login`
+- admin dashboard: `http://localhost:5173/admin`
+- API: `http://localhost:3000`
+- Swagger: `http://localhost:3000/docs`
 
-## Deployment
+## Credenciales iniciales de desarrollo
 
-This repository is currently prepared for local development.
+Seed local:
 
-Cloud deployment can be added later depending on the target platform, budget, and production needs.
+- correo: `admin@eccomers.dev`
+- contrasena por defecto: `Admin123..`
 
-## License
+Importante:
 
-This repository currently has no license file.
+- cambia `SEED_ADMIN_PASSWORD` si vas a usar el seed fuera de desarrollo local
+
+## Notas
+
+- el backend sirve archivos desde `/uploads`
+- SMTP es opcional
+- la mejora de imagen con IA es opcional y depende de `OPENAI_API_KEY`
+- el proyecto esta documentado para desarrollo local; el despliegue cloud se definira despues
+
+## Presentacion profesional
+
+Si quieres usar este proyecto en entrevistas o portafolio, empieza por:
+
+- [Guia de presentacion profesional](./docs/presentacion-profesional.md)
+- [Guia de entrevista tecnica](./docs/guia-entrevista-tecnica.md)
+
+## Licencia
+
+Este repositorio todavia no incluye archivo de licencia.
