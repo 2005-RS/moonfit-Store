@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&family=Montserrat:wght@500;600;700;800&display=swap');
+
+:root {
+  font-family: 'Manrope', 'Segoe UI', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #241d18;
+  background:
+    radial-gradient(circle at top, rgba(248, 244, 239, 0.9), transparent 22%),
+    radial-gradient(circle at 78% 16%, rgba(202, 189, 174, 0.22), transparent 24%),
+    linear-gradient(180deg, #fffaf5 0%, #f5efe7 50%, #eee6dc 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --brand: #15110f;
+  --accent: #cdb8a3;
+  --heading: #171210;
+  --text: #3d342e;
+  --text-soft: #6f6259;
+  --muted-strong: #8c7f74;
+  --surface: rgba(255, 250, 244, 0.92);
+  --surface-strong: #fffaf5;
+  --surface-dark: #171210;
+  --border: rgba(23, 18, 16, 0.1);
+  --shadow-soft: 0 22px 55px rgba(28, 21, 19, 0.08);
+  --shadow-strong: 0 28px 70px rgba(22, 17, 15, 0.12);
+  --heading-font: 'Cormorant Garamond', Georgia, serif;
+  --sport-font: 'Montserrat', 'Segoe UI', sans-serif;
+  --display-font: 'Cormorant Garamond', Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+  background-attachment: fixed;
+  color: var(--text);
+}
+
+a {
+  color: inherit;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+#root {
+  min-height: 100vh;
+}

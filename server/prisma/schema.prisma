@@ -1,0 +1,222 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlserver"
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  password  String
+  role      String    @default("CUSTOMER")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  customer   Customer?
+  auditLogs  AuditLog[]
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  userId    String?  @unique
+  user      User?    @relation(fields: [userId], references: [id])
+  name      String
+  email     String   @unique
+  phone     String?
+  city      String?
+  status    String   @default("ACTIVE")
+  creditApproved Boolean @default(false)
+  creditLimit    Float   @default(0)
+  creditDays     Int     @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+  favorites FavoriteProduct[]
+  payments  OrderPayment[]
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  status      String    @default("ACTIVE")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  products    Product[]
+}
+
+model Brand {
+  id          String    @id @default(cuid())
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  status      String    @default("ACTIVE")
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  products    Product[]
+}
+
+model Campaign {
+  id          String   @id @default(cuid())
+  title       String
+  subtitle    String
+  ctaLabel    String
+  ctaHref     String
+  image       String
+  placement   String
+  discountTag String?
+  status      String   @default("ACTIVE")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Combo {
+  id            String      @id @default(cuid())
+  slug          String      @unique
+  title         String
+  subtitle      String
+  image         String
+  price         Float
+  previousPrice Float?
+  ctaLabel      String
+  status        String      @default("ACTIVE")
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  items         ComboItem[]
+}
+
+model Product {
+  id            String                @id @default(cuid())
+  name          String
+  slug          String                @unique
+  description   String?
+  price         Float
+  previousPrice Float?
+  stock         Int                   @default(0)
+  expirationDate String?
+  badge         String?
+  image         String?
+  status        String                @default("ACTIVE")
+  brandId       String?
+  categoryId    String?
+  createdAt     DateTime              @default(now())
+  updatedAt     DateTime              @updatedAt
+  brand         Brand?                @relation(fields: [brandId], references: [id])
+  category      Category?             @relation(fields: [categoryId], references: [id])
+  comboItems    ComboItem[]
+  orderItems    OrderItem[]
+  movements     InventoryMovement[]
+  goals         ProductGoal[]
+  favoritedBy   FavoriteProduct[]
+}
+
+model ProductGoal {
+  productId String
+  goal      String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([productId, goal])
+}
+
+model FavoriteProduct {
+  customerId String
+  productId  String
+  createdAt  DateTime @default(now())
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([customerId, productId])
+}
+
+model ComboItem {
+  id        String  @id @default(cuid())
+  comboId   String
+  productId String
+  quantity  Int
+  combo     Combo   @relation(fields: [comboId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model Order {
+  id            String        @id @default(cuid())
+  orderNumber   String        @unique
+  customerId    String?
+  customerName  String
+  customerEmail String
+  customerPhone String?
+  customerCity  String?
+  status        String        @default("PENDING")
+  paymentType   String        @default("CASH")
+  paymentMethod String
+  subtotal      Float
+  shipping      Float         @default(0)
+  total         Float
+  amountPaid    Float         @default(0)
+  balanceDue    Float         @default(0)
+  dueDate       DateTime?
+  creditReminderSentAt DateTime?
+  collectionStatus String     @default("PENDING")
+  notes         String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  customer      Customer?     @relation(fields: [customerId], references: [id])
+  items         OrderItem[]
+  payments      OrderPayment[]
+}
+
+model OrderPayment {
+  id            String    @id @default(cuid())
+  orderId       String
+  customerId    String?
+  amount        Float
+  paymentMethod String
+  reference     String?
+  notes         String?
+  proofImage    String?
+  source        String    @default("ADMIN")
+  createdAt     DateTime  @default(now())
+  order         Order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  customer      Customer? @relation(fields: [customerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model OrderItem {
+  id        String   @id @default(cuid())
+  orderId   String
+  productId String
+  quantity  Int
+  unitPrice Float
+  total     Float
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product  @relation(fields: [productId], references: [id])
+}
+
+model InventoryMovement {
+  id         String                @id @default(cuid())
+  productId  String
+  type       String
+  quantity   Int
+  reason     String
+  createdAt  DateTime              @default(now())
+  product    Product               @relation(fields: [productId], references: [id])
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  entityType String
+  entityId   String
+  action     String
+  summary    String
+  metadata   String?
+  actorId    String?
+  actorEmail String?
+  actorRole  String?
+  createdAt  DateTime @default(now())
+  actor      User?    @relation(fields: [actorId], references: [id])
+}
