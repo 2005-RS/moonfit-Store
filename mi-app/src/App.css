@@ -6695,6 +6695,209 @@ p {
   }
 }
 
+/* Store header redesign for tablet and mobile */
+
+.header-trust-strip::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 980px) {
+  .site-header {
+    gap: 12px;
+    background:
+      radial-gradient(circle at top left, rgba(248, 244, 239, 0.08), transparent 24%),
+      radial-gradient(circle at 86% 14%, rgba(205, 184, 163, 0.14), transparent 20%),
+      linear-gradient(145deg, rgba(18, 14, 13, 0.98), rgba(33, 26, 23, 0.94)) !important;
+    box-shadow: 0 24px 48px rgba(12, 9, 8, 0.28) !important;
+  }
+
+  .site-header-top {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+    align-items: stretch !important;
+  }
+
+  .header-brand-block {
+    display: grid !important;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  .brand-mark {
+    align-items: center;
+    min-width: 0;
+  }
+
+  .brand-copy {
+    min-width: 0;
+  }
+
+  .brand-title {
+    letter-spacing: 0.05em;
+  }
+
+  .brand-subtitle {
+    color: rgba(248, 244, 239, 0.66) !important;
+  }
+
+  .header-trust-strip {
+    display: flex !important;
+    flex-wrap: nowrap;
+    gap: 10px;
+    width: 100%;
+    overflow-x: auto;
+    padding: 2px 2px 4px;
+    scrollbar-width: none;
+  }
+
+  .header-inline-toggle {
+    flex: 0 0 auto;
+    min-width: max-content;
+    padding: 11px 16px;
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+    border-color: rgba(255, 248, 239, 0.08);
+    color: rgba(255, 247, 239, 0.92);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .header-inline-toggle-active {
+    background: linear-gradient(135deg, #2a1d18, #4c3528) !important;
+    border-color: rgba(255, 226, 198, 0.18) !important;
+    color: #fff7ef !important;
+    box-shadow:
+      0 14px 28px rgba(11, 8, 7, 0.2),
+      inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+  }
+
+  .header-actions-block {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: stretch !important;
+    width: 100%;
+  }
+
+  .header-utility {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: center;
+    width: 100%;
+    padding: 14px 16px;
+    border-radius: 24px;
+    background:
+      radial-gradient(circle at top left, rgba(248, 244, 239, 0.08), transparent 24%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02));
+    border: 1px solid rgba(255, 248, 239, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  }
+
+  .header-utility-copy {
+    display: grid;
+    gap: 4px;
+    width: auto;
+    min-width: 0;
+    text-align: left;
+  }
+
+  .header-utility-copy span {
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .header-utility-copy strong {
+    font-size: 1.35rem;
+    line-height: 1;
+  }
+
+  .header-utility-copy small {
+    font-size: 0.82rem;
+  }
+
+  .header-cart-button {
+    width: auto;
+    min-width: 168px;
+    min-height: 52px;
+    padding-inline: 18px;
+    border-radius: 20px;
+  }
+
+  .header-menu-toggle {
+    width: auto !important;
+    min-width: 112px;
+    min-height: 52px;
+    padding-inline: 18px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 248, 239, 0.08);
+  }
+
+  .site-header-bottom.site-header-bottom-open {
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 248, 239, 0.08);
+  }
+
+  .main-nav,
+  .header-shortcuts {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .nav-link,
+  .header-shortcut-link {
+    min-height: 48px;
+    border-radius: 18px;
+    justify-content: center;
+    text-align: center;
+  }
+}
+
+@media (max-width: 680px) {
+  .site-header {
+    gap: 12px;
+  }
+
+  .header-actions-block,
+  .header-utility {
+    grid-template-columns: 1fr !important;
+  }
+
+  .header-utility {
+    padding: 14px;
+  }
+
+  .header-cart-button,
+  .header-menu-toggle {
+    width: 100% !important;
+    min-width: 0;
+  }
+
+  .header-trust-strip {
+    gap: 8px;
+  }
+
+  .header-inline-toggle {
+    padding: 10px 14px;
+    font-size: 0.76rem;
+  }
+
+  .main-nav,
+  .header-shortcuts {
+    grid-template-columns: 1fr !important;
+  }
+
+  .nav-link,
+  .header-shortcut-link {
+    justify-content: flex-start;
+    text-align: left;
+    padding-inline: 16px;
+  }
+}
+
 .product-admin-notes {
   display: flex;
   flex-wrap: wrap;
